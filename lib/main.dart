@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/screens/widget_tree.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,14 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Restaurant App"),
-        ),
-        body: Center(
-          child: Text("Test test"),
-        ),
-      ),
+      home: WidgetTree(),
     );
   }
 }
