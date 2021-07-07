@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
+  final Function login;
+
+  LoginScreen({required this.login});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -14,7 +18,9 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            widget.login();
+          },
           child: const Text("Login"),
         ),
       ),
