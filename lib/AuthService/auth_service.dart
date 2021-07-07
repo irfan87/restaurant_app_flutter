@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthAction {
   Future<User?> signInAnon();
+  Future<User?> currentUser();
 }
 
 class AuthService implements AuthAction {
@@ -17,6 +18,16 @@ class AuthService implements AuthAction {
     } catch (e) {
       print(e);
     }
+    return user;
+  }
+
+  Future<User?> currentUser() async {
+    try {
+      user = await firebaseAuth.currentUser;
+    } catch (e) {
+      print(e);
+    }
+
     return user;
   }
 }

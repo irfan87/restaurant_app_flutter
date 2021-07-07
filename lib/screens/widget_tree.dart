@@ -23,6 +23,23 @@ class _WidgetTreeState extends State<WidgetTree> {
   AuthResult authResult = AuthResult.isNotLogin;
 
   @override
+  void initState() {
+    try {
+      widget.authAction.currentUser().then((currUser) {
+        setState(() {
+          user = currUser;
+
+          authResult =
+              user != null ? AuthResult.isLogin : AuthResult.isNotLogin;
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     switch (authResult) {
       case AuthResult.isLogin:
