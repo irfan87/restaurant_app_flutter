@@ -43,7 +43,13 @@ class _WidgetTreeState extends State<WidgetTree> {
   Widget build(BuildContext context) {
     switch (authResult) {
       case AuthResult.isLogin:
-        return HomeScreen();
+        return HomeScreen(
+          logout: () async {
+            user = await widget.authAction.userLogout();
+            authResult = AuthResult.isNotLogin;
+            setState(() {});
+          },
+        );
       case AuthResult.isNotLogin:
         return LoginScreen(
           login: () async {
