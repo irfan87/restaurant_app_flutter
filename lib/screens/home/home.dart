@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  User? user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Text(
-              "Welcome user!",
+              "Welcome!",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30.0,

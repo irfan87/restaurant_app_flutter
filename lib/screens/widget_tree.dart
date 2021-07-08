@@ -68,6 +68,15 @@ class _WidgetTreeState extends State<WidgetTree> {
               },
             );
           },
+          userSignIn: () async {
+            await widget.authAction.signInUser().then((currUser) {
+              if (currUser != null) {
+                user = currUser;
+                authResult = AuthResult.isLogin;
+                setState(() {});
+              }
+            });
+          },
         );
     }
   }
