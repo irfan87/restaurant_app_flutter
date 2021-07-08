@@ -25,6 +25,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late String email;
   late String password;
+  bool _hidePassword = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _hidePassword = false;
+  }
 
   // user can choose either want to sign up or sign in
   List<Widget> buildWidget() {
@@ -79,15 +86,50 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // void _toggleHiddenPassword() {
+  //   setState(() {
+  //     _hidePassword = !_hidePassword;
+  //   });
+  // }
+
   // text form field for sign in
   List<Widget> buildTextField() {
     return [
       TextFormField(
         keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          labelText: "Email",
+          fillColor: Colors.black.withOpacity(.2),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+        ),
         onSaved: (value) => email = value!,
       ),
+      const SizedBox(
+        height: 20.0,
+      ),
       TextFormField(
-        obscureText: true,
+        obscureText: _hidePassword,
+        decoration: InputDecoration(
+          labelText: "Password",
+          fillColor: Colors.black.withOpacity(.2),
+          filled: true,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          suffixIcon: IconButton(
+            icon: _hidePassword == true
+                ? const Icon(Icons.lock)
+                : const Icon(Icons.lock_open),
+            onPressed: () {
+              setState(() {
+                _hidePassword = !_hidePassword;
+              });
+            },
+          ),
+        ),
         onSaved: (value) => password = value!,
       ),
     ];
