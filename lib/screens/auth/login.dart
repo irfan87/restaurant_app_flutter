@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Function createUser;
-  final Function userSignIn;
+  final Function(String email, String password) createUser;
+  final Function(String email, String password) userSignIn;
 
   LoginScreen({
     required this.createUser,
@@ -20,13 +21,19 @@ enum LoginOrRegister {
 
 class _LoginScreenState extends State<LoginScreen> {
   LoginOrRegister loginOrRegister = LoginOrRegister.login;
+  GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
+  late String email;
+  late String password;
+
+  // user can choose either want to sign up or sign in
   List<Widget> buildWidget() {
     if (loginOrRegister == LoginOrRegister.login) {
       return [
         ElevatedButton(
           onPressed: () {
-            widget.userSignIn();
+            globalKey.currentState?.save();
+            widget.userSignIn(email, password);
           },
           child: const Text("Sign in"),
         ),
@@ -49,7 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
       return [
         ElevatedButton(
           onPressed: () {
-            widget.createUser();
+            globalKey.currentState?.save();
+            widget.createUser(email, password);
           },
           child: const Text("Create new user"),
         ),
@@ -71,6 +79,20 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  // text form field for sign in
+  List<Widget> buildTextField() {
+    return [
+      TextFormField(
+        keyboardType: TextInputType.emailAddress,
+        onSaved: (value) => email = value!,
+      ),
+      TextFormField(
+        obscureText: true,
+        onSaved: (value) => password = value!,
+      ),
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,9 +100,12 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text("Restaurant App"),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: buildWidget(),
+        child: Form(
+          key: globalKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: buildTextField() + buildWidget(),
+          ),
         ),
       ),
     );
