@@ -2,7 +2,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthAction {
-  Future<User?> signInAnon();
   Future<User?> currentUser();
   Future<User?> userLogout();
   Future<User?> createUser();
@@ -14,18 +13,6 @@ class AuthService implements AuthAction {
   late UserCredential? userCredential;
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-
-  @override
-  Future<User?> signInAnon() async {
-    try {
-      user = await firebaseAuth.signInAnonymously().then((userValue) {
-        user = userValue.user;
-      });
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-    return user;
-  }
 
   @override
   Future<User?> currentUser() async {

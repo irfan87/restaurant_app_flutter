@@ -52,11 +52,6 @@ class _WidgetTreeState extends State<WidgetTree> {
         );
       case AuthResult.isNotLogin:
         return LoginScreen(
-          login: () async {
-            user = await widget.authAction.signInAnon();
-            authResult = AuthResult.isLogin;
-            setState(() {});
-          },
           createUser: () async {
             await widget.authAction.createUser().then(
               (currUser) {
