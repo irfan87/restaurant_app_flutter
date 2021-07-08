@@ -38,6 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (loginOrRegister == LoginOrRegister.login) {
       return [
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                25.0,
+              ),
+            ),
+          ),
           onPressed: () {
             globalKey.currentState?.save();
             widget.userSignIn(email, password);
@@ -62,6 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       return [
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              25.0,
+            ),
+          )),
           onPressed: () {
             globalKey.currentState?.save();
             widget.createUser(email, password);
@@ -86,12 +99,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  // void _toggleHiddenPassword() {
-  //   setState(() {
-  //     _hidePassword = !_hidePassword;
-  //   });
-  // }
-
   // text form field for sign in
   List<Widget> buildTextField() {
     return [
@@ -99,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
           labelText: "Email",
-          fillColor: Colors.black.withOpacity(.2),
+          fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
@@ -108,13 +115,13 @@ class _LoginScreenState extends State<LoginScreen> {
         onSaved: (value) => email = value!,
       ),
       const SizedBox(
-        height: 20.0,
+        height: 5.0,
       ),
       TextFormField(
         obscureText: _hidePassword,
         decoration: InputDecoration(
           labelText: "Password",
-          fillColor: Colors.black.withOpacity(.2),
+          fillColor: Colors.white,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
@@ -142,11 +149,22 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text("Restaurant App"),
       ),
       body: Center(
-        child: Form(
-          key: globalKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: buildTextField() + buildWidget(),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 20.0,
+              bottom: 80.0,
+              top: 20.0,
+              right: 20.0,
+            ),
+            child: Form(
+              key: globalKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: buildTextField() + buildWidget(),
+              ),
+            ),
           ),
         ),
       ),

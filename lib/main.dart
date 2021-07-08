@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       title: "Restaurant App",
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: Color.fromRGBO(200, 200, 200, 1),
       ),
       home: SystemUI(),
     );
