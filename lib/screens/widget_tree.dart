@@ -52,24 +52,29 @@ class _WidgetTreeState extends State<WidgetTree> {
         );
       case AuthResult.isNotLogin:
         return LoginScreen(
-          createUser: () async {
-            await widget.authAction.createUser().then(
+          createUser: (email, password) async {
+            await widget.authAction.createUser(email, password).then(
               (currUser) {
                 if (currUser != null) {
                   user = currUser;
                   authResult = AuthResult.isLogin;
                   setState(() {});
                 }
+                return null;
               },
             );
           },
-          userSignIn: () async {
-            await widget.authAction.signInUser().then((currUser) {
+          userSignIn: (email, password) async {
+            await widget.authAction
+                .signInUser(email, password)
+                .then((currUser) {
               if (currUser != null) {
                 user = currUser;
                 authResult = AuthResult.isLogin;
                 setState(() {});
               }
+
+              return null;
             });
           },
         );

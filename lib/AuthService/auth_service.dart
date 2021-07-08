@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class AuthAction {
   Future<User?> currentUser();
   Future<User?> userLogout();
-  Future<User?> createUser();
-  Future<User?> signInUser();
+  Future<User?> createUser(email, password);
+  Future<User?> signInUser(email, password);
 }
 
 class AuthService implements AuthAction {
@@ -37,11 +37,10 @@ class AuthService implements AuthAction {
   }
 
   @override
-  Future<User?> createUser() async {
+  Future<User?> createUser(email, password) async {
     try {
       await firebaseAuth
-          .createUserWithEmailAndPassword(
-              email: "aaa@gmail.com", password: '123456')
+          .createUserWithEmailAndPassword(email: email, password: password)
           .then((currUser) {
         user = currUser.user;
       });
@@ -51,11 +50,10 @@ class AuthService implements AuthAction {
   }
 
   @override
-  Future<User?> signInUser() async {
+  Future<User?> signInUser(email, password) async {
     try {
       await firebaseAuth
-          .signInWithEmailAndPassword(
-              email: "aaa@gmail.com", password: '123456')
+          .signInWithEmailAndPassword(email: email, password: password)
           .then((currUser) => user = currUser.user);
 
       return user;
