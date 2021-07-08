@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:restaurant_app/AuthService/auth_service.dart';
 import 'package:restaurant_app/screens/widget_tree.dart';
 
@@ -21,8 +22,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: WidgetTree(
+      home: SystemUI(),
+    );
+  }
+}
+
+class SystemUI extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+      ),
+    );
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      child: WidgetTree(
         authAction: AuthService(),
+      ),
+      value: const SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.blue,
+        systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
   }
