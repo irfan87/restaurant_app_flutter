@@ -57,6 +57,17 @@ class _WidgetTreeState extends State<WidgetTree> {
             authResult = AuthResult.isLogin;
             setState(() {});
           },
+          createUser: () async {
+            await widget.authAction.createUser().then(
+              (currUser) {
+                if (currUser != null) {
+                  user = currUser;
+                  authResult = AuthResult.isLogin;
+                  setState(() {});
+                }
+              },
+            );
+          },
         );
     }
   }
