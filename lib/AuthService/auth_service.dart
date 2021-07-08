@@ -5,6 +5,7 @@ abstract class AuthAction {
   Future<User?> signInAnon();
   Future<User?> currentUser();
   Future<User?> userLogout();
+  Future<User?> createUser();
 }
 
 class AuthService implements AuthAction {
@@ -40,5 +41,18 @@ class AuthService implements AuthAction {
     }
 
     return null;
+  }
+
+  Future<User?> createUser() async {
+    try {
+      await firebaseAuth
+          .createUserWithEmailAndPassword(
+              email: "aaa@gmail.com", password: '123456')
+          .then((currUser) {
+        user = currUser.user;
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+    }
   }
 }
