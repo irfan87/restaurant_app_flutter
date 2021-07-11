@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/settings/settings.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(String email, String password) createUser;
@@ -37,19 +38,13 @@ class _LoginScreenState extends State<LoginScreen> {
   List<Widget> buildWidget() {
     if (loginOrRegister == LoginOrRegister.login) {
       return [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                25.0,
-              ),
-            ),
-          ),
-          onPressed: () {
+        CustomButton(
+          color: MainColors.primaryColor,
+          text: "Sign in",
+          onPress: () {
             globalKey.currentState?.save();
             widget.userSignIn(email, password);
           },
-          child: const Text("Sign in"),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -68,18 +63,13 @@ class _LoginScreenState extends State<LoginScreen> {
       ];
     } else {
       return [
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              25.0,
-            ),
-          )),
-          onPressed: () {
+        CustomButton(
+          color: MainColors.primaryColor,
+          text: "Create new user",
+          onPress: () {
             globalKey.currentState?.save();
             widget.createUser(email, password);
           },
-          child: const Text("Create new user"),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -105,8 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
       TextFormField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          labelText: "Email",
-          fillColor: Colors.white,
+          labelText: "Email Address",
+          fillColor: MainColors.whiteColor,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
@@ -121,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
         obscureText: _hidePassword,
         decoration: InputDecoration(
           labelText: "Password",
-          fillColor: Colors.white,
+          fillColor: MainColors.whiteColor,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25.0),
