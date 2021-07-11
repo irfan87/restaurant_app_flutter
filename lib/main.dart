@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:restaurant_app/AuthService/auth_service.dart';
 import 'package:restaurant_app/screens/widget_tree.dart';
+import 'package:restaurant_app/settings/settings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Restaurant App",
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: MainColors.primaryColor,
         scaffoldBackgroundColor: Color.fromRGBO(200, 200, 200, 1),
       ),
       home: SystemUI(),
@@ -33,7 +34,7 @@ class SystemUI extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
+        statusBarColor: MainColors.primaryColor,
       ),
     );
 
@@ -42,7 +43,7 @@ class SystemUI extends StatelessWidget {
         authAction: AuthService(),
       ),
       value: const SystemUiOverlayStyle(
-        systemNavigationBarColor: Colors.blue,
+        systemNavigationBarColor: MainColors.primaryColor,
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
