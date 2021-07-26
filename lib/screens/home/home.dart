@@ -16,6 +16,36 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+//TODO: global item list strings(?)
+List<String> itemName = [
+  'apple',
+  'orange',
+  'eggs',
+  'milk',
+  'bread',
+  'cake',
+];
+
+//TODO: global item description
+List<double> itemPrice = [
+  1.00,
+  2.40,
+  1.50,
+  2.00,
+  1.50,
+  1.00,
+];
+
+//TODO: global item URL image
+List<String> itemImage = [
+  'https://blogs-images.forbes.com/bethhoffman/files/2012/04/Apple.jpg',
+  'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg',
+  'https://solidstarts.com/wp-content/uploads/when-can-babies-eat-eggs.jpg',
+  'https://cdn.britannica.com/34/176234-050-0E0C55C6/Glass-milk.jpg',
+  'https://bakingamoment.com/wp-content/uploads/2020/01/IMG_7173-white-bread-2.jpg',
+  'https://preppykitchen.com/wp-content/uploads/2018/04/Funfetti-cake-recipe-new-500x500.jpg'
+];
+
 class _HomeScreenState extends State<HomeScreen> {
   int currentItem = 0;
 
