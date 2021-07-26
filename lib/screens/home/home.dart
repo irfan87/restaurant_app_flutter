@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/CustomNavigationBar/custom_navigation_bar.dart';
 import 'package:restaurant_app/screens/auth/login.dart';
 
 import 'package:restaurant_app/settings/settings.dart';
@@ -57,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+      bottomNavigationBar: CustomNavigationBar(),
     );
   }
 }
