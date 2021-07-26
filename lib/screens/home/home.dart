@@ -37,7 +37,7 @@ List<double> itemPrice = [
 ];
 
 //TODO: global item URL image
-List<String> itemImage = [
+List<String> itemImageURL = [
   'https://blogs-images.forbes.com/bethhoffman/files/2012/04/Apple.jpg',
   'https://upload.wikimedia.org/wikipedia/commons/c/c4/Orange-Fruit-Pieces.jpg',
   'https://solidstarts.com/wp-content/uploads/when-can-babies-eat-eggs.jpg',
@@ -75,8 +75,22 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget get homePage {
-    return Center(
-      child: Text("Home"),
+    // act similar to listview but in grid
+    return GridView.builder(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+      ),
+      itemBuilder: (BuildContext context, index) {
+        return GridTile(
+          child: Image.network(
+            itemImageURL[index],
+          ),
+          footer: Center(
+            child: Text("${itemName[index]} - ${itemPrice[index]}"),
+          ),
+        );
+      },
+      itemCount: itemImageURL.length,
     );
   }
 
