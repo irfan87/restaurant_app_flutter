@@ -89,7 +89,14 @@ class _HomeScreenState extends State<HomeScreen> {
           return GridTile(
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed(ItemDescription.routeName);
+                Navigator.of(context).pushNamed(
+                  ItemDescription.routeName,
+                  arguments: [
+                    itemName[index],
+                    itemPrice[index],
+                    itemImageURL[index],
+                  ],
+                );
               },
               child: Image.network(
                 itemImageURL[index],
