@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/CustomNavigationBar/custom_navigation_bar.dart';
+import 'package:restaurant_app/screens/home/item_description.dart';
 
 import 'package:restaurant_app/settings/settings.dart';
 
@@ -87,8 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         itemBuilder: (BuildContext context, index) {
           return GridTile(
-            child: Image.network(
-              itemImageURL[index],
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed(ItemDescription.routeName);
+              },
+              child: Image.network(
+                itemImageURL[index],
+              ),
             ),
             footer: Center(
               child: ClipRRect(

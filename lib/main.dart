@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:restaurant_app/AuthService/auth_service.dart';
+import 'package:restaurant_app/screens/home/item_description.dart';
 import 'package:restaurant_app/screens/widget_tree.dart';
 import 'package:restaurant_app/settings/settings.dart';
 
@@ -25,6 +26,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: MainColors.primaryColor,
       ),
       home: const SystemUI(),
+      routes: {
+        ItemDescription.routeName: (BuildContext context) => ItemDescription(),
+      },
     );
   }
 }
