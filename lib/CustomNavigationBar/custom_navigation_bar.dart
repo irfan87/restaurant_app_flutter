@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:restaurant_app/settings/settings.dart';
 
 class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar({Key? key}) : super(key: key);
+  final Function(int) currentSelectedItem;
+
+  const CustomNavigationBar({Key? key, required this.currentSelectedItem})
+      : super(key: key);
 
   @override
   _CustomNavigationBarState createState() => _CustomNavigationBarState();
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  int selectedItem = 1;
+  int selectedItem = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
       onTap: (currItem) {
         setState(() {
           selectedItem = currItem;
+          widget.currentSelectedItem(currItem);
         });
       },
     );
