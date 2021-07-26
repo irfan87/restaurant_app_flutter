@@ -21,15 +21,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Restaurant App",
       theme: ThemeData(
-        primarySwatch: MainColors.primaryColor,
-        scaffoldBackgroundColor: Color.fromRGBO(200, 200, 200, 1),
+        primaryColor: MainColors.primaryColor,
+        scaffoldBackgroundColor: MainColors.primaryColor,
       ),
-      home: SystemUI(),
+      home: const SystemUI(),
     );
   }
 }
 
 class SystemUI extends StatelessWidget {
+  const SystemUI({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -44,7 +46,7 @@ class SystemUI extends StatelessWidget {
       ),
       value: const SystemUiOverlayStyle(
         systemNavigationBarColor: MainColors.primaryColor,
-        systemNavigationBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
   }

@@ -1,24 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/screens/auth/login.dart';
+
+import 'package:restaurant_app/settings/settings.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Function logout;
+  late final Function logout;
 
-  HomeScreen({required this.logout});
+  HomeScreen({
+    Key? key,
+    required this.logout,
+  }) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User? user;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Restaurant App"),
+        elevation: 0.0,
       ),
       body: Center(
         child: Column(
@@ -31,10 +35,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: MainColors.greenColor,
+              ),
               onPressed: () {
                 widget.logout();
               },
-              child: const Text("Logout"),
+              // onPressed: () {
+              // Widget userLogout;
+              // if (widget.logout == true) {
+              //   Container();
+              // } else {
+              //   CircularProgressIndicator();
+              // }
+              // return userLogout;
+
+              // Navigator.pop(context);
+              // },
+              child: Text("Logout"),
             ),
           ],
         ),
