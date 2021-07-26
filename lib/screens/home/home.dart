@@ -76,21 +76,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget get homePage {
     // act similar to listview but in grid
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 10.0,
+          childAspectRatio: 2.0,
+          mainAxisSpacing: 20.0,
+        ),
+        itemBuilder: (BuildContext context, index) {
+          return GridTile(
+            child: Image.network(
+              itemImageURL[index],
+            ),
+            footer: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(25.0),
+                child: Container(
+                  width: double.infinity,
+                  color: MainColors.blackColor.withOpacity(0.7),
+                  child: Center(
+                    child: Text(
+                      "${itemName[index]} - ${itemPrice[index]}".toUpperCase(),
+                      style: TextStyle(
+                        color: MainColors.whiteColor,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+        itemCount: itemImageURL.length,
       ),
-      itemBuilder: (BuildContext context, index) {
-        return GridTile(
-          child: Image.network(
-            itemImageURL[index],
-          ),
-          footer: Center(
-            child: Text("${itemName[index]} - ${itemPrice[index]}"),
-          ),
-        );
-      },
-      itemCount: itemImageURL.length,
     );
   }
 
