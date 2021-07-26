@@ -28,13 +28,17 @@ class AuthService implements AuthAction {
   Future<User?> userLogout() async {
     try {
       // await firebaseAuth.signOut();
-      user = await firebaseAuth.currentUser;
+      // user = await firebaseAuth.currentUser;
 
-      if (user != null) {
-        await firebaseAuth.signOut();
-      }
+      // if (user != null) {
+      //   await firebaseAuth.signOut();
+      // }
 
-      return user;
+      // return user;
+
+      await firebaseAuth.signOut();
+
+      user = null;
     } catch (e) {
       print(e);
     }
