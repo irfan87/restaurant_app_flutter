@@ -6,7 +6,9 @@ class LoginScreen extends StatefulWidget {
   final Function(String email, String password) createUser;
   final Function(String email, String password) userSignIn;
 
+  // ignore: prefer_const_constructors_in_immutables
   LoginScreen({
+    Key? key,
     required this.createUser,
     required this.userSignIn,
   });
@@ -26,116 +28,145 @@ class _LoginScreenState extends State<LoginScreen> {
 
   late String email;
   late String password;
-  bool _hidePassword = true;
+  bool _hidePassword = false;
 
   @override
   void initState() {
     super.initState();
-    _hidePassword = false;
+    _hidePassword = !_hidePassword;
   }
 
-  // user can choose either want to sign up or sign in
-  List<Widget> buildWidget() {
-    if (loginOrRegister == LoginOrRegister.login) {
-      return [
-        CustomButton(
-          color: MainColors.primaryColor,
-          text: "Sign in",
-          onPress: () {
-            globalKey.currentState?.save();
-            widget.userSignIn(email, password);
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Not a member yet?"),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  loginOrRegister = LoginOrRegister.register;
-                });
-              },
-              child: const Text("Register here"),
-            ),
-          ],
-        ),
-      ];
-    } else {
-      return [
-        CustomButton(
-          color: MainColors.primaryColor,
-          text: "Create new user",
-          onPress: () {
-            globalKey.currentState?.save();
-            widget.createUser(email, password);
-          },
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Already a member? Click to "),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  loginOrRegister = LoginOrRegister.login;
-                });
-              },
-              child: const Text("Sign in"),
-            ),
-          ],
-        )
-      ];
-    }
+  @override
+  void dispose() {
+    super.dispose();
+    email = "";
+    password = "";
   }
 
   // text form field for sign in
-  List<Widget> buildTextField() {
-    return [
-      TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          labelText: "Email Address",
-          fillColor: MainColors.whiteColor,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
+  Widget buildTextField() {
+    return Column(
+      children: [
+        TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+            hintText: "Email Address",
+            fillColor: MainColors.whiteColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
           ),
+          onSaved: (value) => email = value!,
         ),
-        onSaved: (value) => email = value!,
-      ),
-      const SizedBox(
-        height: 5.0,
-      ),
-      TextFormField(
-        obscureText: _hidePassword,
-        decoration: InputDecoration(
-          labelText: "Password",
-          fillColor: MainColors.whiteColor,
-          filled: true,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
+        const SizedBox(
+          height: 5.0,
+        ),
+        TextFormField(
+          obscureText: _hidePassword,
+          decoration: InputDecoration(
+            hintText: "Password",
+            fillColor: MainColors.whiteColor,
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            suffixIcon: IconButton(
+              icon: _hidePassword == true
+                  ? const Icon(Icons.lock)
+                  : const Icon(Icons.lock_open),
+              onPressed: () {
+                setState(() {
+                  _hidePassword = !_hidePassword;
+                });
+              },
+            ),
           ),
-          suffixIcon: IconButton(
-            icon: _hidePassword == true
-                ? const Icon(Icons.lock)
-                : const Icon(Icons.lock_open),
+          onSaved: (value) => password = value!,
+        ),
+        const SizedBox(
+          height: 20.0,
+        ),
+      ],
+    );
+  }
+
+  // user can choose either want to sign up or sign in
+  Widget buildButtonWidget(BuildContext context) {
+    if (loginOrRegister == LoginOrRegister.login) {
+      return Column(
+        children: [
+          TextButton(
             onPressed: () {
-              setState(() {
-                _hidePassword = !_hidePassword;
-              });
+              globalKey.currentState!.save();
+              widget.userSignIn(email, password);
             },
+            child: Text(
+              'Sign In',
+              style: TextStyle(
+                color: MainColors.whiteColor,
+              ),
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: MainColors.greenColor,
+            ),
           ),
-        ),
-        onSaved: (value) => password = value!,
-      ),
-    ];
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Not a member yet?"),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    loginOrRegister = LoginOrRegister.register;
+                  });
+                },
+                child: const Text("Register here"),
+              ),
+            ],
+          ),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          TextButton(
+            onPressed: () {
+              globalKey.currentState!.save();
+              widget.createUser(email, password);
+            },
+            child: Text(
+              'Register',
+              style: TextStyle(color: MainColors.whiteColor),
+            ),
+            style: TextButton.styleFrom(
+              backgroundColor: MainColors.greenColor,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("Already a member? Click to "),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    loginOrRegister = LoginOrRegister.login;
+                  });
+                },
+                child: const Text("Sign in"),
+              ),
+            ],
+          ),
+        ],
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         title: const Text("Restaurant App"),
       ),
       body: Center(
@@ -152,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: buildTextField() + buildWidget(),
+                children: [buildTextField(), buildButtonWidget(context)],
               ),
             ),
           ),

@@ -1,5 +1,6 @@
 // firebase auth service
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 abstract class AuthAction {
   Future<User?> currentUser();
@@ -9,12 +10,11 @@ abstract class AuthAction {
 }
 
 class AuthService implements AuthAction {
-  late final User? user;
+  User? user;
   late UserCredential? userCredential;
 
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  @override
   Future<User?> currentUser() async {
     try {
       user = await firebaseAuth.currentUser;
@@ -25,18 +25,21 @@ class AuthService implements AuthAction {
     return user;
   }
 
-  @override
   Future<User?> userLogout() async {
     try {
-      await firebaseAuth.signOut();
-    } on FirebaseAuthException catch (e) {
+      // await firebaseAuth.signOut();
+      user = await firebaseAuth.currentUser;
+
+      if (user != null) {
+        await firebaseAuth.signOut();
+      }
+
+      return user;
+    } catch (e) {
       print(e);
     }
-
-    return null;
   }
 
-  @override
   Future<User?> createUser(email, password) async {
     try {
       await firebaseAuth
@@ -45,11 +48,13 @@ class AuthService implements AuthAction {
         user = currUser.user;
       });
     } on FirebaseAuthException catch (e) {
-      print(e.message);
+      // debugPrint(e.message);
+      debugPrint(e.message);
     }
+
+    return user;
   }
 
-  @override
   Future<User?> signInUser(email, password) async {
     try {
       await firebaseAuth
@@ -65,5 +70,7 @@ class AuthService implements AuthAction {
       }
       print(e.message);
     }
+
+    return user;
   }
 }

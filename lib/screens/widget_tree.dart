@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:restaurant_app/AuthService/auth_service.dart';
 import 'package:restaurant_app/screens/auth/login.dart';
 import 'package:restaurant_app/screens/home/home.dart';
@@ -7,7 +8,10 @@ import 'package:restaurant_app/screens/home/home.dart';
 class WidgetTree extends StatefulWidget {
   final AuthAction authAction;
 
-  WidgetTree({required this.authAction});
+  WidgetTree({
+    Key? key,
+    required this.authAction,
+  }) : super(key: key);
 
   @override
   _WidgetTreeState createState() => _WidgetTreeState();
@@ -46,7 +50,7 @@ class _WidgetTreeState extends State<WidgetTree> {
         return HomeScreen(
           logout: () async {
             user = await widget.authAction.userLogout();
-            authResult = AuthResult.isNotLogin;
+            authResult = await AuthResult.isNotLogin;
             setState(() {});
           },
         );
